@@ -176,4 +176,5 @@ ifeq ($(HOST_OS),linux)
     endif
   endif
 endif
-
+# Enabled Changelog
+export IS_RELEASED_BUILD=true
