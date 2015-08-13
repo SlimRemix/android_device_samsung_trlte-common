@@ -1491,14 +1491,10 @@ on property:sys.boot_completed=1
     write /sys/kernel/cpufreq_hardlimit/scaling_min_freq_screen_on 268800
     write /sys/kernel/cpufreq_hardlimit/scaling_max_freq_screen_off 883200
 
-    # Intelliplug settings
+    # msm hotplug settings
     stop mpdecision
-    write /sys/module/intelli_plug/parameters/intelli_plug_active 1
-    write /sys/module/intelli_plug/parameters/touch_boost_active 0
-    write /sys/module/intelli_plug/parameters/nr_run_profile_sel 2
-    write /sys/module/intelli_plug/parameters/nr_run_hysteresis 8
-    write /sys/module/intelli_plug/parameters/cpu_nr_run_threshold 2000
-
+    write /sys/module/msm_hotplug/msm_enabled 1
+    
     setprop ro.qualcomm.perf.cores_online 2
 
     #Set Mode Change Condition
