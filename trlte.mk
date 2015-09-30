@@ -217,3 +217,7 @@ PRODUCT_COPY_FILES += \
 # QCOM Perf lib
 PRODUCT_PROPERTY_OVERRIDES += \
    ro.vendor.extension_library=/vendor/lib/libqc-opt.so
+
+# Add ZION959 kernel config file
+PRODUCT_COPY_FILES += \
+    $(LOCAL_PATH)/init.zion959.kernel.sh:system/etc/init.zion959.kernel.sh
