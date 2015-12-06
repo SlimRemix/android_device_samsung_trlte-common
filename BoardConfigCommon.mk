@@ -22,14 +22,10 @@ LOCAL_PATH := device/samsung/trlte-common
 # Architecture
 TARGET_CPU_VARIANT := krait
 
-# Compiler
-# L1/L2 cache size parameters by @JustArchi
-BOARD_GLOBAL_CFLAGS := --param l1-cache-size=32 --param l1-cache-line-size=64 --param l2-cache-size=2048
-
 # Audio
 BOARD_USES_ALSA_AUDIO := true
 AUDIO_FEATURE_ENABLED_HWDEP_CAL := true
-AUDIO_FEATURE_LOW_LATENCY_PRIMARY := true
+AUDIO_USE_LL_AS_PRIMARY := true
 BOARD_USES_ES705 := true
 TARGET_HAVE_DYN_A2DP_SAMPLERATE := true
 
@@ -68,12 +64,12 @@ USE_OPENGL_RENDERER := true
 TARGET_SPECIFIC_HEADER_PATH := $(LOCAL_PATH)/include
 
 # Kernel
-BOARD_CUSTOM_BOOTIMG_MK := $(LOCAL_PATH)/mkbootimg.mk
 BOARD_KERNEL_BASE := 0x00000000
-BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 dwc3_msm.cpu_to_affin=1
+BOARD_KERNEL_CMDLINE := console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 dwc3_msm.cpu_to_affin=1 androidboot.selinux=permissive
 BOARD_KERNEL_PAGESIZE := 4096
 BOARD_KERNEL_SEPARATED_DT := true
 BOARD_MKBOOTIMG_ARGS := --ramdisk_offset 0x02600000 --tags_offset 0x02400000 --second_offset 0x00f00000
+TARGET_KERNEL_ARCH := arm
 TARGET_KERNEL_CONFIG := apq8084_sec_defconfig
 TARGET_KERNEL_SELINUX_CONFIG := selinux_defconfig
 TARGET_KERNEL_SOURCE := kernel/samsung/trlte
@@ -118,30 +114,6 @@ include device/qcom/sepolicy/sepolicy.mk
 BOARD_SEPOLICY_DIRS += \
     device/samsung/trlte-common/sepolicy
 
-BOARD_SEPOLICY_UNION += \
-    bluetooth.te \
-    device.te \
-    file.te \
-    file_contexts \
-    genfs_contexts \
-    kernel.te \
-    lcd_dev.te \
-    macloader.te \
-    mediaserver.te \
-    mdm_helper.te \
-    mm-qcamerad.te \
-    mpdecision.te \
-    platform_app.te \
-    rild.te \
-    system_app.te \
-    system_server.te \
-    tee.te \
-    time_daemon.te \
-    ueventd.te \
-    wpa.te \
-    vibe_dev.te \
-    vold.te
-
 # Time
 BOARD_USES_QC_TIME_SERVICES := true
 
@@ -174,5 +146,5 @@ ifeq ($(HOST_OS),linux)
     endif
   endif
 endif
-# Enabled Changelog
-export IS_RELEASED_BUILD=true
+
+TARGET_USES_BLOCK_BASED_OTA := false

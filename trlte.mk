@@ -33,9 +33,9 @@ PRODUCT_AAPT_PREF_CONFIG := xxhdpi
 TARGET_SCREEN_HEIGHT := 2560
 TARGET_SCREEN_WIDTH := 1440
 
-$(call inherit-product, frameworks/native/build/phone-xxhdpi-3072-dalvik-heap.mk)
+$(call inherit-product, frameworks/native/build/phone-xxhdpi-2048-dalvik-heap.mk)
 
-$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-3072-hwui-memory.mk)
+$(call inherit-product-if-exists, frameworks/native/build/phone-xxhdpi-2048-hwui-memory.mk)
 
 # Permissions
 PRODUCT_COPY_FILES += \
@@ -93,8 +93,8 @@ PRODUCT_COPY_FILES += \
 
 # Camera
 PRODUCT_PACKAGES += \
+    libxml2\
     camera.apq8084 \
-    libxml2
 
 # Display
 PRODUCT_PACKAGES += \
@@ -102,6 +102,13 @@ PRODUCT_PACKAGES += \
     gralloc.apq8084 \
     hwcomposer.apq8084 \
     memtrack.apq8084
+
+# Doze service
+#PRODUCT_PACKAGES += \
+#    SamsungDoze
+
+PRODUCT_PACKAGES += \
+   libhealthd.default
 
 # Fingerprint sensor
 PRODUCT_PACKAGES += \
@@ -196,6 +203,10 @@ PRODUCT_PACKAGES += \
     init.sec.boot.sh \
     ueventd.qcom.rc
 
+# Samsung symbols
+PRODUCT_PACKAGES += \
+    libsamsung_symbols
+
 # Torch
 PRODUCT_PACKAGES += \
     Torch
@@ -210,14 +221,16 @@ PRODUCT_PACKAGES += \
 
 # WiFi config
 PRODUCT_COPY_FILES += \
-   $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
-   $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf
+    $(LOCAL_PATH)/configs/wpa_supplicant_overlay.conf:system/etc/wifi/wpa_supplicant_overlay.conf \
+    $(LOCAL_PATH)/configs/p2p_supplicant_overlay.conf:system/etc/wifi/p2p_supplicant_overlay.conf \
+    frameworks/native/data/etc/handheld_core_hardware.xml:system/etc/permissions/handheld_core_hardware.xml
 
 
-# QCOM Perf lib
-PRODUCT_PROPERTY_OVERRIDES += \
-   ro.vendor.extension_library=/vendor/lib/libqc-opt.so
+# tcmiface for tcm support
+PRODUCT_PACKAGES += tcmiface
 
-# Add ZION959 kernel config file
-PRODUCT_COPY_FILES += \
-    $(LOCAL_PATH)/init.zion959.kernel.sh:system/etc/init.zion959.kernel.sh
+PRODUCT_BOOT_JARS += \
+    tcmiface
+
+# this seems to only work with the cm-11.0 branch, not cm-13.0 (for now)
+PRODUCT_PACKAGES += libstlport
